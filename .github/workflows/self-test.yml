@@ -1,0 +1,13 @@
+name: self-test
+# Runs the reusable workflow on this repository itself.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scan:
+    uses: ./.github/workflows/secret-scan.yml
+    with:
+      full-history: ${{ github.event_name == 'workflow_dispatch' }}
