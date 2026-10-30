@@ -10,6 +10,11 @@ pushed or pull-request range, or over full history when `full-history` is true. 
 `.betterleaks.toml` / `.gitleaks.toml` when present, otherwise the personal rule set embedded in the workflow (a copy
 of `tommyli/ai-agents` `config/betterleaks.toml`). Findings print with values redacted.
 
+`org-denylist` (optional, default empty) takes the text of a second Betterleaks rule file, typically an organisation
+variable (`org-denylist: ${{ vars.<NAME> }}`). When set, the same range is scanned with it, unredacted, and the range's
+commit messages are matched against its rules that have no allowlist; a hit fails the job. Callers without it run the
+secret scan alone. The terms live only in the caller's variable, never in this repository.
+
 Caller, `.github/workflows/secret-scan.yml`, pinned by commit SHA:
 
 ```yaml
